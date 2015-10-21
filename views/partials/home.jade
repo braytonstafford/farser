@@ -1,0 +1,89 @@
+div(ng-controller='HomeController')
+
+  md-button.md-raised(aria-label='Paste', ng-click='paste(this)')
+   ng-md-icon(icon='content_paste')
+  md-button.md-raised.md-secondary(aria-label='Clear Message',ng-click='reset()') Clear Message
+  md-button.md-raised.md-primary(aria-label='Sample Message',ng-click='messageSample()') Sample Message
+  md-card
+    md-card-content
+      md-input-container(flex)
+        label Paste your HL7 Message Here
+        textarea(id='message', ng-model='message', columns='1', wrap='soft', ng-change='init()') {{ message }}
+        
+  h3.md-title Message Type: {{ messageType }}
+
+  div(layout='row')
+    div(flex='25')  
+      md-card
+        md-card-content
+          md-data-table-toolbar
+            h3.md-title Segments
+          md-data-table-container
+            table(md-data-table, md-progress='deferred')
+              thead
+                tr
+                  th Segment Type
+              tbody
+                tr(ng-repeat='segmentType in segmentTypes track by $index', ng-click='getSegmentData(segmentType.segmentName, segmentType.segmentSet)')
+                  td {{ segmentType.segmentName }}
+    div(layout='column', flex)
+      md-card
+        md-card-content
+          md-data-table-toolbar
+            h3.md-title Segment Information
+          md-data-table-container
+            table(md-data-table)
+              thead(md-order='query.order', md-trigger='onOrderChange')
+                tr
+                  th Field Description
+                  th Field
+              tbody
+                tr(ng-repeat='field in segmentFields', ng-click='getFieldData(field.segment, field.fieldNum)')
+                  td {{ field.fieldNum }} {{ field.fieldDescription }}
+                  td {{ field.fieldContents }}
+      md-card
+        md-card-content
+          md-data-table-container
+            table(md-data-table)
+              thead(md-order='query.order', md-trigger='onOrderChange')
+                tr
+                  th Field #
+                  th Repetition #
+                  th Repeat Contents
+              tbody
+                tr(ng-repeat='field in repeaters', ng-if='field.repeaterContents')
+                  td {{ field.fieldNum }}
+                  td {{ field.repeatNum }}
+                  td {{ field.repeaterContents }}
+    div(layout='column', flex='25')
+      md-card
+        md-card-content
+          md-data-table-container
+            table(md-data-table)
+              thead(md-order='query.order', md-trigger='onOrderChange')
+                tr
+                  th Field #
+                  th Component #
+                  th Component
+              tbody
+                tr(ng-repeat='field in components', ng-if='field.componentContents')
+                  td {{ field.fieldNum }}
+                  td {{ field.componentNum }}
+                  td {{ field.componentContents }}
+      md-card
+        md-card-content
+          md-data-table-container
+            table(md-data-table)
+              thead(md-order='query.order', md-trigger='onOrderChange')
+                tr
+                  th Field #
+                  th Sub-Component #
+                  th Sub-Component
+              tbody
+                tr(ng-repeat='field in subcomponents', ng-if='field.subcomponentContents')
+                  td {{ field.fieldNum }}
+                  td {{ field.subcomponentNum }}
+                  td {{ field.subcomponentContents }}
+                  
+  //- md-button.md-fab.md-fab-bottom-right(aria-label='Add', ng-click='showAdd($event)')
+  //-   ng-md-icon(icon='add')
