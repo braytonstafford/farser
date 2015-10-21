@@ -21,7 +21,7 @@ angular.module('myApp.controllers', []).
         $scope.paste = function () {
           $document.getElementById('message').focus();
           $document.addEventListener('paste', function (evt) {
-            $scope.message = evt.clipboardData.getData('text/plain');
+            document.getElementById('message').value = evt.clipboardData.getData('text/plain');
             console.log(evt.clipboardData.getData('text/plain'));
           });
         };
@@ -85,7 +85,6 @@ angular.module('myApp.controllers', []).
 
         $scope.init = function () {
         $scope.segmentTypes = [];
-        var repeatingSegments = [];
         var fieldCount = [];
         $scope.messageType = '';
         $scope.fieldData = [];
@@ -98,42 +97,40 @@ angular.module('myApp.controllers', []).
           for (var c = 0; c<segmentCount; c++) {
             $scope.segmentTypes[c] = {
               segmentName: $scope.message.split('\n')[c].substr(0,3),
-              segmentSet: $scope.message.split('\n')[c].split('|')[1]
+              segmentId: $scope.message.split('\n')[c].split('|')[0] + c
             };
           }
 
           // Check for repeating segments
-          var current = null;
-          var cnt;
-          var segmentRepeatCount = [];
-          for (var a=0; a<$scope.segmentTypes.length; a++) {
-            if ($scope.segmentTypes[a].segmentName != current) {
-              if (cnt > 0) {
-                // Create object for this array element
-                segmentRepeatCount.push({
-                  segmentName: current,
-                  segmentCount: cnt
-                });
-              }
-              current = $scope.segmentTypes[a].segmentName;
-              cnt = 1;
-            } else {
-              cnt++;
-            }
-          }
-          if (cnt > 0) {
-            // the last element counted
-            segmentRepeatCount.push({
-              segmentName: current,
-              segmentCount: cnt
-            });
-          }
+          function getRepeatingSegments(arr) {
+            var a = [], b = [], repeatingElements = [], prev;
 
-          for (var b=0; b<segmentRepeatCount.length; b++){
-            if (segmentRepeatCount[b].segmentCount > 1) {
-              repeatingSegments.push(segmentRepeatCount[b].segmentName);
+            arr.sort();
+            for ( var i = 0; i < arr.length; i++ ) {
+                if ( arr[i] !== prev ) {
+                    a.push(arr[i]);
+                    b.push(1);
+                } else {
+                    b[b.length-1]++;
+                }
+                prev = arr[i];
             }
-          }
+
+            for (var j=0; j<a.length; j++) {
+                if (b[j] > 1) {
+                	repeatingElements.push(a[j]);
+                }
+            }
+            return repeatingElements;
+        }
+
+        var segmentList = [];
+        for (var d=0; d<$scope.segmentTypes.length; d++) {
+           segmentList.push($scope.segmentTypes[d].segmentName);
+        }
+        repeatingSegments = getRepeatingSegments(segmentList);
+
+
           //loop through arrays and populate fieldData object with the field data
           for (var q=0; q<$scope.segmentTypes.length; q++) {
             fieldCount = $scope.message.split('\n')[q].split('|').length;
@@ -148,7 +145,7 @@ angular.module('myApp.controllers', []).
               } else if (repeatingSegments.indexOf($scope.message.split('\n')[q].split('|')[0]) > -1) {
                 $scope.fieldData.push({
                   segment: $scope.message.split('\n')[q].split('|')[0],
-                  segmentSet: $scope.message.split('\n')[q].split('|')[1],
+                  segmentId: $scope.message.split('\n')[q].split('|')[0] + q,
                   fieldNum: m+1,
                   fieldDescription: eval($scope.message.split('\n')[q].split('|')[0]+'Fields[m]'),
                   fieldContents: $scope.message.split('\n')[q].split('|')[(m+1)]
@@ -177,17 +174,19 @@ angular.module('myApp.controllers', []).
             }
           }
         };
-
-        $scope.getSegmentData = function (segment, setId) {
+        
+        $scope.getSegmentData = function (segment, segmentId) {
+          //console.log('Function Params: ', segmentId);
           // Create array of segment fields
           $scope.segmentFields = [];
           $scope.components = [];
           $scope.subcomponents = [];
           $scope.repeaters = [];
+          //console.log('Repeating Segments Object: ', repeatingSegments);
           if (repeatingSegments.indexOf(segment) > -1) {
             //display the proper instance of the segment
             for (var c=0; c<$scope.fieldData.length; c++) {
-              if ($scope.fieldData[c].segment == segment && $scope.fieldData[c].fieldContents !== '' && $scope.fieldData[c].segmentSet === setId) {
+              if ($scope.fieldData[c].segment == segment && $scope.fieldData[c].fieldContents !== '' && $scope.fieldData[c].segmentId === segmentId) {
                 $scope.segmentFields.push($scope.fieldData[c]);
               }
             }

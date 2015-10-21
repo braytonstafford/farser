@@ -24,7 +24,7 @@ div(ng-controller='HomeController')
                 tr
                   th Segment Type
               tbody
-                tr(ng-repeat='segmentType in segmentTypes track by $index', ng-click='getSegmentData(segmentType.segmentName, segmentType.segmentSet)')
+                tr(ng-repeat='segmentType in segmentTypes track by $index', ng-click='getSegmentData(segmentType.segmentName, segmentType.segmentId)')
                   td {{ segmentType.segmentName }}
     div(layout='column', flex)
       md-card
