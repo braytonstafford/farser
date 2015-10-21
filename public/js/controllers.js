@@ -32,7 +32,7 @@ angular.module('myApp.controllers', []).
                            'ORC|NW|8642753100012^LIS|20809880170^LCS||||||19980727000000|||HAVILAND\n' +
                            'OBR|1|8642753100012^LIS|20809880170^LCS|008342^UPPER RESPIRATORYCULTURE^L|||19980727175800||||||SS#634748641 CH14885 SRC:THROASRC:PENI|19980727000000||||||20809880170||19980730041800||BN|F\n' +
                            'OBX|1|ST|008342^UPPER RESPIRATORY CULTURE^L||FINALREPORT|||||N|F||| 19980729160500|BN\n' +
-                           'ORC|NW|8642753100012^LIS|20809880170^LCS||||||19980727000000|||HAVILAND\n' +
+                           'ORC|NW|8642753100013^LIS|20809880171^LDS||||||19980728000000|||HAVILAND2\n' +
                            'OBR|2|8642753100012^LIS|20809880170^LCS|997602^.^L|||19980727175800||||G|||19980727000000||||||20809880170||19980730041800|||F|997602|||008342\n' +
                            'OBX|2|CE|997231^RESULT 1^L||M415|||||N|F|||19980729160500|BN\n' +
                            'NTE|1|L|MORAXELLA (BRANHAMELLA) CATARRHALIS\n' +
@@ -174,7 +174,7 @@ angular.module('myApp.controllers', []).
             }
           }
         };
-        
+
         $scope.getSegmentData = function (segment, segmentId) {
           //console.log('Function Params: ', segmentId);
           // Create array of segment fields

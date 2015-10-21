@@ -26,6 +26,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
+app.use(require('prerender-node'));
 
 // development only
 if (app.get('env') === 'development') {
