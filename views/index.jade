@@ -7,7 +7,7 @@ block body
         ng-md-icon(icon='menu')
       h3
         strong Farser 
-      h6 ~ A web based javascript HL7 message parser
+      h6 ~ A web based HL7 message viewer
       span(flex)
       md-button(aria-label='Search', ng-click='showSearch = !showSearch; document.getElementById("search").focus();')
         ng-md-icon(icon='search')
@@ -38,8 +38,8 @@ block body
       div.md-toolbar-tools-bottom(layout='column', inset)
         user-avatar
         span
-        div Hello {{ name }}
-        div {{ email }}
+        div Farser is a web based HL7 viewer. The message is broken into segments, fields, and components. Simply paste your HL7 message into the text area. You can try an example by clicking the Sample Message button. {{ name }}
+        div Suggest ideas for improving Farser #[a(href='https://github.com/braytonstafford/farser/issues/new')] here.
     md-list
       md-item(ng-repeat='item in menu')
         a

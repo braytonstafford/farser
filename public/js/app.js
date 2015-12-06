@@ -31,6 +31,7 @@ config(function ($routeProvider, $locationProvider) {
     });
 
   $locationProvider.html5Mode(true);
+  $locationProvider.hashPrefix('!');
 }).
 config(function($mdThemingProvider) {
   var customBlueMap = $mdThemingProvider.extendPalette('light-blue', {

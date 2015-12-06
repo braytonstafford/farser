@@ -24,9 +24,9 @@ app.set('view engine', 'jade');
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(require('prerender-node').set('prerenderToken', 'fzA3RyU6suNwdavaWjEI'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
-app.use(require('prerender-node'));
 
 // development only
 if (app.get('env') === 'development') {

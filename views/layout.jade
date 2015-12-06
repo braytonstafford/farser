@@ -2,13 +2,16 @@
 html(ng-app="myApp")
   head
     meta(charset='utf8')
+    meta(name='fragment', content='!')
+    meta(name='description', content='Farser is a web based HL7 message viewer. The message is broken into segments, fields, and components. Simply paste your HL7 message into the text area. You can try an example by clicking the Sample Message button.')
+    meta(name='author', content='Brayton Stafford')
     base(href='/')
-    title HL7 Message Parser
+    title HL7 Message Viewer
     link(rel='stylesheet', href='bower_components/angular-material/angular-material.min.css')
     link(rel='stylesheet', href='bower_components/angular-material-icons/angular-material-icons.css')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic')
     link(rel='stylesheet', href='bower_components/angular-material-data-table/dist/md-data-table.min.css')
     link(rel='stylesheet', href='css/app.css')
     meta(name='viewport', content='initial-scale=1')
-  body(layout='column', ng-controller='HomeController')
+  body(layout='column', ng-controller='HomeController', ng-cloak)
     block body
