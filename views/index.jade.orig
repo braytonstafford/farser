@@ -6,15 +6,11 @@ block body
       md-button.menuBtn(ng-click="toggleSidenav('left')", aria-label='Menu')
         ng-md-icon(icon='menu')
       h3
-        strong Farser
+        strong Farser 
       h6 ~ A web based HL7 message viewer
       span(flex)
-      form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
-        input(type='hidden', name='cmd', value='_s-xclick')
-        input(type='hidden', name='hosted_button_id', value='GPKMD36MQKPDS')
-        input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif', border='0', name='submit', alt='PayPal - The safer, easier way to pay online!')
-        img(alt='', border='0', src='https://www.paypalobjects.com/en_US/i/scr/pixel.gif', width='1', height='1')
-      //- md-button(aria-label='Donate', class='md-raised md-primary' type='Submit') Donate
+      md-button(aria-label='Search', ng-click='showSearch = !showSearch; document.getElementById("search").focus();')
+        ng-md-icon(icon='search')
       md-button(aria-label='Open Settings', ng-click='showListBottomSheet($event)')
         ng-md-icon(icon='more_vert')
     //- md-tabs.md-primary(md-stretch-tabs='always', md-selected='data.selectedIndex')
@@ -42,32 +38,32 @@ block body
       div.md-toolbar-tools-bottom(layout='column', inset)
         user-avatar
         span
-        div Farser is a web based HL7 viewer. The message is broken into segments, fields, and components. Simply paste your HL7 message into the text area. You can try an example by clicking the Sample Messag$
+        div Farser is a web based HL7 viewer. The message is broken into segments, fields, and components. Simply paste your HL7 message into the text area. You can try an example by clicking the Sample Message button. {{ name }}
         div Suggest ideas for improving Farser #[a(href='https://github.com/braytonstafford/farser/issues/new')] here.
     md-list
       md-item(ng-repeat='item in menu')
         a
-       md-item-content(md-ink-ripple, layout='row', layout-align='start center')
-         div.inset
-           ng-md-icon(icon='{{ item.icon }}')
-         div.inset {{ item. title }}
-    md-divider
-    md-subheader Management
-    md-item(ng-repeat='item in admin ')
-     a
-       md-item-content(md-ink-ripple, layout='row', layout-align='start center')
-         div.inset
-           ng-md-icon(icon='{{ item.icon }}')
-         div.inset {{ item.title }}
-    //div(layout='column', flex, id='content')
+          md-item-content(md-ink-ripple, layout='row', layout-align='start center')
+            div.inset
+              ng-md-icon(icon='{{ item.icon }}')
+            div.inset {{ item. title }}
+      md-divider
+      md-subheader Management
+      md-item(ng-repeat='item in admin ')
+        a
+          md-item-content(md-ink-ripple, layout='row', layout-align='start center')
+            div.inset
+              ng-md-icon(icon='{{ item.icon }}')
+            div.inset {{ item.title }}
+  //div(layout='column', flex, id='content')
   md-content(flex, md-scroll-y)
     ui-view(layout='column', layout-fill, layout-padding)
-    div.inset(hide-sm ng-view)
-
+      div.inset(hide-sm ng-view)
+        
   script(src='/socket.io/socket.io.js')
   script(src='bower_components/angular/angular.js')
   script(src='bower_components/angular-animate/angular-animate.min.js')
-  script(src='bower_components/angular-aria/angular-aria.min.js')
+  script(src='bower_components/angular-aria/angular-aria.min.js')  
   script(src='bower_components/angular-route/angular-route.js')
   script(src='bower_components/angular-socket-io/socket.js')
   script(src='bower_components/angular-material/angular-material.min.js')
@@ -78,3 +74,4 @@ block body
   script(src='js/controllers.js')
   script(src='js/filters.js')
   script(src='js/directives.js')
+
