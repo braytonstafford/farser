@@ -3,7 +3,7 @@ extends layout
 block body
   md-toolbar(ng-show='!showSearch')
     div.md-toolbar-tools
-      md-button.menuBtn(ng-click="toggleSidenav('left')", aria-label='Menu')
+      md-button.menuBtn(ng-click="toggleSidenav()", aria-label='Menu')
         ng-md-icon(icon='menu')
       h3
         strong Farser
@@ -15,7 +15,7 @@ block body
         input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif', border='0', name='submit', alt='PayPal - The safer, easier way to pay online!')
         img(alt='', border='0', src='https://www.paypalobjects.com/en_US/i/scr/pixel.gif', width='1', height='1')
       //- md-button(aria-label='Donate', class='md-raised md-primary' type='Submit') Donate
-      md-button(aria-label='Open Settings', ng-click='showListBottomSheet($event)')
+      md-button(aria-label='Open Settings', ng-click='')
         ng-md-icon(icon='more_vert')
     //- md-tabs.md-primary(md-stretch-tabs='always', md-selected='data.selectedIndex')
     //-   md-tab(id='tab1', aria-controls='tab1-content')
