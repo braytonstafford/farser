@@ -59,9 +59,7 @@ block body
          div.inset
            ng-md-icon(icon='{{ item.icon }}')
          div.inset {{ item.title }}
-    //div(layout='column', flex, id='content')
   md-content(flex, md-scroll-y)
-    ui-view(layout='column', layout-fill, layout-padding)
     div.inset(hide-sm ng-view)
 
   script(src='/socket.io/socket.io.js')
