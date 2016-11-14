@@ -3,28 +3,12 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('MyCtrl1', function ($scope, socket) {
-    socket.on('send:time', function (data) {
-      $scope.time = data.time;
-    });
-  }).
-  controller('HomeController', function ($scope, socket, $mdSidenav, $mdDialog, $mdBottomSheet, $window, $document) {
+  controller('HomeController', function ($scope, $mdSidenav, $mdDialog, $mdBottomSheet, $window, $document) {
     $scope.toggleSidenav = function (menuId) {
       $mdSidenav(menuId).toggle();
     };
-    socket.on('send:name', function (data) {
-      $scope.name = data.name;
-    });
 
         $scope.message = '';
-
-        $scope.paste = function () {
-          $document.getElementById('message').focus();
-          $document.addEventListener('paste', function (evt) {
-            document.getElementById('message').value = evt.clipboardData.getData('text/plain');
-            console.log(evt.clipboardData.getData('text/plain'));
-          });
-        };
 
         $scope.messageSample = function () {
           $scope.message = 'MSH|^~\&|LCS|LCA|LIS|TEST9999|199807311532||ORU^R01|3629|P|2.2\n' +
@@ -261,7 +245,7 @@ angular.module('myApp.controllers', []).
         $scope.showListBottomSheet = function($event) {
           $scope.alert = '';
           $mdBottomSheet.show({
-            template: '<md-bottom-sheet class="md-list md-has-header"> <md-subheader>Settings</md-subheader> <md-list> <md-item ng-repeat="item in items"><md-item-content md-ink-ripple flex class="inset"> <a flex aria-label="{{item.name}}" ng-click="listItemClick($index)"> <span class="md-inline-list-icon-label">{{ item.name }}</span> </a></md-item-content> </md-item> </md-list></md-bottom-sheet>',
+            templateUrl: './partials/bottomSheet.jade',
             controller: 'HomeController',
             targetEvent: $event
           }).then(function(clickedItem) {
@@ -281,35 +265,4 @@ angular.module('myApp.controllers', []).
             $scope.alert = 'You cancelled the dialog.';
           });
         };
-
-    socket.on('send:message', function(data) {
-      $scope.response = {};
-      $scope.data = data;
-      $scope.selected = [];
-
-      $scope.query = {
-        filter: '',
-        order: 'name',
-        limit: 5,
-        page: 1
-      };
-
-      function success(desserts) {
-        $scope.desserts = desserts;
-      }
-
-      $scope.search = function (predicate) {
-        $scope.filter = predicate;
-        $scope.deferred = $nutrition.desserts.get($scope.query, success).$promise;
-      };
-
-      $scope.onOrderChange = function (order) {
-        return $nutrition.desserts.get($scope.query, success).$promise;
-      };
-
-      $scope.onPaginationChange = function (page, limit) {
-        return $nutrition.desserts.get($scope.query, success).$promise;
-      };
-
-    });
   });

@@ -11,7 +11,6 @@ angular.module('myApp', [
   'myApp.directives',
 
   // 3rd party dependencies
-  'btford.socket-io',
   'ngMaterial',
   'ngMdIcons',
   'md.data.table'

@@ -1,6 +1,6 @@
 {
-  "name": "application-name",
-  "version": "0.0.0",
+  "name": "farser",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "angular-animate": "^1.5.8",
@@ -8,8 +8,9 @@
     "angular-material-data-table": "^0.8.11",
     "angular-material-icons": "^0.6.0",
     "express": "~3.2.6",
+    "hl7-dictionary": "^1.0.1",
+    "html": "^1.0.0",
     "jade": "~0.31.2",
-    "prerender-node": "^2.1.0",
-    "socket.io": "~0.9.16"
+    "prerender-node": "^2.1.0"
   }
 }

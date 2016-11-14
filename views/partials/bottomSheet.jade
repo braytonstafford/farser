@@ -1,0 +1,27 @@
+md-bottom-sheet.md-list.md-has-header
+  md-subheader Menu
+  div(layout='row')
+    div(layout='column', flex='33')
+      md-card
+        md-card-content
+          h2 Farser Info
+          p Farser is a web based HL7 viewer. Simply paste your HL7 message into the text area or you can try an example by clicking the Sample Message button. When a message is pasted in the HL7 message is immediately parsed and avaible to view by clicking first on a segment in the segments section and then drilling deeper into fields, components, sub-components, and repeating fields.
+    div(layout='column', flex='33')
+      md-card
+        md-card-content
+          h2 Submit an issue
+          p If you run into a problem while trying to use Farser please click the button below to be taken to the Farser github page to submit an issue.
+        md-card-actions(layout='row', layout-align='end center')
+          md-button(aria-label="Submit an issue", href="https://github.com/braytonstafford/farser/issues/new") Farser github issues
+    div(layout='column', flex='33')
+      md-card
+        md-card-content
+          h2 Donate
+          p Consider donating to my paypal address if you find Farser useful and would like to see it's functionality expanded.
+          center
+            form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+              input(type='hidden', name='cmd', value='_s-xclick')
+              input(type='hidden', name='hosted_button_id', value='GPKMD36MQKPDS')
+              input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif', border='0', name='submit', alt='PayPal - The safer, easier way to pay online!')
+              img(alt='', border='0', src='https://www.paypalobjects.com/en_US/i/scr/pixel.gif', width='1', height='1')
+            //- md-button(aria-label='Donate', class='md-raised md-primary' type='Submit') Donate
