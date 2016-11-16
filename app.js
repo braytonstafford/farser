@@ -19,7 +19,7 @@ var server = require('http').createServer(app);
 // all environments
 app.set('port', process.env.PORT || 4000);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -35,7 +35,7 @@ if (app.get('env') === 'development') {
 // production only
 if (app.get('env') === 'production') {
   // TODO
-};
+}
 
 
 /**
@@ -47,7 +47,8 @@ app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
 
 // JSON API
-app.get('/api/name', api.name);
+app.get('/api/segment', api.getSegmentData);
+// app.get('/api/field', api.getFieldData);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);

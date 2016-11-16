@@ -2,7 +2,7 @@
 Farser is web based JavaScript HL7 message parser.
 ## About
 
-This is a nodejs project to parse and easily read fields, components, sub-components, and repeating fields in a HL7 message.
+This is an node/express/angular app to parse and easily read fields, components, sub-components, and repeating fields in a HL7 message.
 
 ## Installation
 

@@ -8,7 +8,13 @@ div(ng-controller='HomeController')
         label Paste your HL7 Message Here
         textarea(id='message', ng-model='message', columns='1', wrap='soft', ng-change='init()') {{ message }}
         
-  h3.md-title Message Type: {{ messageType }}
+  div(layout='row')
+    div(flex)  
+      md-card
+        md-card-content
+          h3.md-title Message Information
+          p Message Version: {{ messageVersion }}
+          p Message Type: {{ messageType }}
 
   div(layout='row')
     div(flex='10')  
@@ -28,7 +34,7 @@ div(ng-controller='HomeController')
       md-card
         md-card-content
           md-data-table-toolbar
-            h3.md-title Segment Information
+            h3.md-title Fields
           md-data-table-container
             table(md-data-table)
               thead(md-order='query.order', md-trigger='onOrderChange')
@@ -41,6 +47,8 @@ div(ng-controller='HomeController')
                   td {{ field.fieldContents }}
       md-card
         md-card-content
+          md-data-table-toolbar
+            h3.md-title Field Repetition
           md-data-table-container
             table(md-data-table)
               thead(md-order='query.order', md-trigger='onOrderChange')
@@ -56,6 +64,8 @@ div(ng-controller='HomeController')
     div(layout='column', flex='30')
       md-card
         md-card-content
+          md-data-table-toolbar
+            h3.md-title Components
           md-data-table-container
             table(md-data-table)
               thead(md-order='query.order', md-trigger='onOrderChange')
@@ -70,6 +80,8 @@ div(ng-controller='HomeController')
                   td {{ field.componentContents }}
       md-card
         md-card-content
+          md-data-table-toolbar
+            h3.md-title Sub-Components
           md-data-table-container
             table(md-data-table)
               thead(md-order='query.order', md-trigger='onOrderChange')

@@ -1,12 +1,12 @@
 extends layout
 
 block body
-  md-toolbar(ng-show='!showSearch')
+  md-toolbar
     div.md-toolbar-tools
       //- md-button.menuBtn(ng-click="toggleSidenav()", aria-label='Menu')
       //-   ng-md-icon(icon='menu')
       h1
-        strong Farser ~ The web based HL7 message viewer
+        b Farser #[strong() A free web based HL7 message parser/viewer]
       span(flex)
       md-button(aria-label='Open Settings', ng-click='showListBottomSheet()')
         ng-md-icon(icon='more_vert')
