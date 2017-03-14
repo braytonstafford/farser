@@ -31,12 +31,48 @@ exports.getSegmentData = function (req, res) {
 
   if (fieldIndex !== undefined && fieldIndex !== null && fieldIndex !== '') {
     var fieldDescription = HL7Dictionary.definitions[messageVersion].segments[segment].fields[fieldIndex].desc;
+    var fieldDataType = HL7Dictionary.definitions[messageVersion].segments[segment].fields[fieldIndex].datatype;
     // var fieldDescription = [];
     // for (var i=0;i<HL7Dictionary.definitions[messageVersion].segments[segment].fields.length;i++) {
     //   fieldDescription.push(HL7Dictionary.definitions[messageVersion].segments[segment].fields[i].desc);
     // }
 
-    res.json(fieldDescription);
+    res.json({
+      fieldDescription,
+      fieldDataType
+    });
+  } else {
+    res.json('You got nothing');
+  }
+};
+
+
+
+exports.getFieldData = function (req, res) {
+  // var messageVersion = req.query.messageVersion;
+  // var messageType = req.query.messageType;
+  // var segment = req.query.segment;
+  // var fieldIndex = req.query.fieldIndex;
+  //
+  // if (fieldIndex !== undefined && fieldIndex !== null && fieldIndex !== '') {
+  //   var componentDescription = HL7Dictionary.definitions[messageVersion].segments[segment].fields[fieldIndex].desc;
+  //   res.json(componentDescription);
+  // } else {
+  //   res.json('You got nothing');
+  // }
+  res.json('success');
+};
+
+
+
+exports.getComponentData = function (req, res) {
+  var messageVersion = req.query.messageVersion;
+  var dataType = req.query.dataType;
+  console.log('query: ', req.query);
+
+  if (dataType !== undefined && dataType !== null && dataType !== '') {
+    var componentDescription = HL7Dictionary.definitions[messageVersion].fields[dataType].desc;
+    res.json(componentDescription);
   } else {
     res.json('You got nothing');
   }

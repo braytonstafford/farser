@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('HomeController', function ($scope, $mdSidenav, $mdDialog, $mdBottomSheet, $window, $document, $http) {
+  controller('HomeController', function ($scope, $mdSidenav, $mdDialog, $mdBottomSheet, $window, $document, $http, $q) {
     $scope.toggleSidenav = function (menuId) {
       $mdSidenav(menuId).toggle();
     };
@@ -119,7 +119,7 @@ angular.module('myApp.controllers', []).
                 var mshSegment = {
                   segment: segment,
                   fieldNum: fieldNum+1,
-                  fieldDescription: fieldDesc.data,
+                  fieldDescription: fieldDesc.data.fieldDescription,
                   fieldContents: fieldContents
                 };
 
@@ -133,7 +133,7 @@ angular.module('myApp.controllers', []).
                     segment: segment,
                     segmentId: segment + segmentNum,
                     fieldNum: fieldNum+1,
-                    fieldDescription: fieldDesc.data,
+                    fieldDescription: fieldDesc.data.fieldDescription,
                     fieldContents: fieldContents
                   };
 
@@ -144,7 +144,7 @@ angular.module('myApp.controllers', []).
                   var regularSegment = {
                     segment: segment,
                     fieldNum: fieldNum+1,
-                    fieldDescription: fieldDesc.data,
+                    fieldDescription: fieldDesc.data.fieldDescription,
                     fieldContents: fieldContents
                   };
 
@@ -227,6 +227,43 @@ angular.module('myApp.controllers', []).
           }
         };
 
+        var getComponentDescription = function (segmentInfo, fieldNum, w, componentContents, t) {
+          $http.get('/api/segment', {params: segmentInfo}).then(function (fieldData) {
+            console.log('fieldData: ', fieldData);
+            if (fieldData) {
+              var componentObject = {
+                fieldNum: fieldNum,
+                componentNum: w + 1,
+                dataType: fieldData.data.fieldDataType,
+                componentContents: componentContents,
+                messageVersion: $scope.message.split('\n')[0].split('|')[11]
+              };
+              return $http.get('/api/component', {params: componentObject});
+            } else {
+              return $q.reject();
+            }
+          }).
+          then(function (result) {
+            console.log('field data: ', result);
+            //console.log('componentDescription: ', componentDescription.data);
+
+            var componentObject = {
+              fieldNum: $scope.segmentFields[t].fieldNum,
+              componentNum: w + 1,
+              componentDescription: result.data,
+              componentContents: $scope.segmentFields[t].fieldContents.split('^')[w],
+              messageVersion: $scope.message.split('\n')[0].split('|')[11]
+            };
+
+            $scope.components.push(componentObject);
+          }).
+          catch(function (err) {
+            console.log('Failure Jim: ', err);
+            return { data: 'Failure Jim' };
+          });
+        };
+
+
         $scope.getFieldData = function (segment, field) {
           $scope.components = [];
           $scope.subcomponents = [];
@@ -234,13 +271,15 @@ angular.module('myApp.controllers', []).
           for (var t=0; t<$scope.segmentFields.length; t++) {
             if ($scope.segmentFields[t].segment === segment && $scope.segmentFields[t].fieldNum === field) {
               for (var w=0; w<$scope.segmentFields[t].fieldContents.split('^').length; w++) {
-                $scope.components.push(
-                  {
-                    fieldNum: $scope.segmentFields[t].fieldNum,
-                    componentNum: w + 1,
-                    componentDescription: 'Something' + w,
-                    componentContents: $scope.segmentFields[t].fieldContents.split('^')[w]
-                  });
+                // get segment and field info for getting field descriptions
+                var segmentInfo = {
+                  messageVersion: $scope.message.split('\n')[0].split('|')[11],
+                  messageType: $scope.message.split('\n')[0].split('|')[8],
+                  segment: segment,
+                  fieldIndex: $scope.segmentFields[t].fieldNum
+                };
+
+                getComponentDescription(segmentInfo, $scope.segmentFields[t].fieldNum, w, $scope.segmentFields[t].fieldContents.split('^')[w], t);
               }
             }
           }
