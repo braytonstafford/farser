@@ -1,0 +1,27 @@
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "farser"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "farser"
+  template:
+    metadata:
+      labels:
+        app: "farser"
+      annotations:
+        tlsUpdated: "TLSUPDATED"
+    spec:
+      containers:
+        - name: "farser"
+          image: "us.gcr.io/long-way-856/farser:latest"
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 4000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: BASE_URL
+              value: https://hl7.cc

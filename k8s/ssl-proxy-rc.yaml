@@ -1,0 +1,36 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: ssl-proxy-farser
+  labels:
+    role: ssl-proxy-farser
+spec:
+  replicas: 1
+  selector:
+    role: ssl-proxy-farser
+  template:
+    metadata:
+      name: ssl-proxy-farser
+      labels:
+        role: ssl-proxy-farser
+    spec:
+      containers:
+      - name: ssl-proxy-farser
+        image: us.gcr.io/long-way-856/ssl-proxy-letsencrypt:latest
+        env:
+        - name: TARGET_SERVICE
+          value: farser:4000
+        - name: ENABLE_SSL
+          value: 'true'
+        - name: cert_email
+          value: brayton82@gmail.com
+        - name: cert_domains
+          value: hl7.cc
+        # remove this when it's time to get a real cert
+        # - name: LETSENCRYPT_ENDPOINT
+        #   value: https://acme-staging.api.letsencrypt.org/directory
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443

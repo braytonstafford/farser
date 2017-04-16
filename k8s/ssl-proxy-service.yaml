@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ssl-proxy-farser
+  labels:
+    role: ssl-proxy-farser
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: https
+    protocol: TCP
+  selector:
+    role: ssl-proxy-farser
+  type: LoadBalancer
