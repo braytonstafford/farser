@@ -1,6 +1,7 @@
 node_modules/
 public/.DS_Store
 .idea
+k8s
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
