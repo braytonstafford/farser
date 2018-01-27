@@ -16,13 +16,13 @@ md-data-table-toolbar {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 0 24px;
+  padding: 0 8px;
   height: 64px;
   background-color: #fff;
   box-sizing: border-box;
 }
 md-data-table-toolbar > .md-title {
-  font-size: 20px;
+  font-size: 18px;
 }
 md-data-table-toolbar > .md-button:first-child {
   margin-left: -6px;
@@ -437,7 +437,7 @@ table[md-data-table] {
 table[md-data-table]:not([md-row-select]) > thead:not([md-table-progress]) > tr > th:first-child,
 table[md-data-table]:not([md-row-select]) > tbody > tr > td:first-child,
 table[md-data-table]:not([md-row-select]) > tfoot > tr > td:first-child {
-  padding: 0 28px 0 24px;
+  padding: 0 28px 0 8px;
 }
 table[md-data-table]:not([md-row-select]) > thead:not([md-table-progress]) > tr > th:nth-child(n+2):nth-last-child(n+2),
 table[md-data-table]:not([md-row-select]) > tbody > tr > td:nth-child(n+2):nth-last-child(n+2),

@@ -39,11 +39,13 @@ div(ng-controller='HomeController')
             table(md-data-table)
               thead(md-order='query.order', md-trigger='onOrderChange')
                 tr
+                  th Field #
                   th Field Description
                   th Field
               tbody
                 tr(ng-repeat='field in segmentFields', ng-click='getFieldData(field.segment, field.fieldNum)')
-                  td {{ field.fieldNum }} {{ field.fieldDescription }}
+                  td {{ field.fieldNum }}
+                  td {{ field.fieldDescription }}
                   td {{ field.fieldContents }}
       md-card
         md-card-content

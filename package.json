@@ -1,6 +1,6 @@
 {
   "name": "farser",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "private": true,
   "dependencies": {
     "angular-animate": "^1.5.8",

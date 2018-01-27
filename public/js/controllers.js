@@ -105,7 +105,7 @@ angular.module('myApp.controllers', []).
 
             // get segment and field info for getting field descriptions
             var segmentInfo = {
-              messageVersion: $scope.message.split('\n')[0].split('|')[11],
+              messageVersion: $scope.message.split('\n')[0].split('|')[11].split('^')[0],
               messageType: $scope.message.split('\n')[0].split('|')[8],
               segment: segment,
               fieldIndex: fieldNum
@@ -196,7 +196,7 @@ angular.module('myApp.controllers', []).
           //     $scope.messageVersion = $scope.fieldData[x].fieldContents;
           //   }
           // }
-          $scope.messageVersion = $scope.message.split('\n')[0].split('|')[11];
+          $scope.messageVersion = $scope.message.split('\n')[0].split('|')[11].split('^')[0];
           $scope.messageType = $scope.message.split('\n')[0].split('|')[8];
           console.log('messageType: ', $scope.messageType);
           console.log('messageVersion: ', $scope.messageVersion);
@@ -236,7 +236,7 @@ angular.module('myApp.controllers', []).
                 componentNum: w + 1,
                 dataType: fieldData.data.fieldDataType,
                 componentContents: componentContents,
-                messageVersion: $scope.message.split('\n')[0].split('|')[11]
+                messageVersion: $scope.message.split('\n')[0].split('|')[11].split('^')[0]
               };
               return $http.get('/api/component', {params: componentObject});
             } else {
@@ -252,7 +252,7 @@ angular.module('myApp.controllers', []).
               componentNum: w + 1,
               componentDescription: result.data,
               componentContents: $scope.segmentFields[t].fieldContents.split('^')[w],
-              messageVersion: $scope.message.split('\n')[0].split('|')[11]
+              messageVersion: $scope.message.split('\n')[0].split('|')[11].split('^')[0]
             };
 
             $scope.components.push(componentObject);
@@ -273,7 +273,7 @@ angular.module('myApp.controllers', []).
               for (var w=0; w<$scope.segmentFields[t].fieldContents.split('^').length; w++) {
                 // get segment and field info for getting field descriptions
                 var segmentInfo = {
-                  messageVersion: $scope.message.split('\n')[0].split('|')[11],
+                  messageVersion: $scope.message.split('\n')[0].split('|')[11].split('^')[0],
                   messageType: $scope.message.split('\n')[0].split('|')[8],
                   segment: segment,
                   fieldIndex: $scope.segmentFields[t].fieldNum
