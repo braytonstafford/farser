@@ -13,7 +13,7 @@ angular.module('myApp.controllers', []).
         $scope.messageSample = function () {
           $scope.message =  'MSH|^~\&|ADT1|MCM|LABADT|MCM|198808181126|SECURITY|ADT^A04|MSG00001|P|2.4\n' +
                             'EVN|A01-|198808181123\n' +
-                            'PID|||PATID1234^5^M11||JONES^WILLIAM^A^III||19610615|M-||2106-3|1200 N ELM STREET^^GREENSBORO^NC^27401-1020|GL|(919)379-1212|(919)271-3434~(919)277-3114||S||PATID12345001^2^M10|123456789|9-87654^NC\n' +
+                            'PID|||PATID1234^5^M11||JONES^WILLIAM^A^III&Jr||19610615|M-||2106-3|1200 N ELM STREET^^GREENSBORO^NC^27401-1020|GL|(919)379-1212|(919)271-3434~(919)277-3114||S||PATID12345001^2^M10|123456789|9-87654^NC\n' +
                             'NK1|1|JONES^BARBARA^K|SPO|||||20011105\n' +
                             'NK1|1|JONES^MICHAEL^A|FTH\n' +
                             'PV1|1|I|2000^2012^01||||004777^LEBAUER^SIDNEY^J.|||SUR||-||1|A0-\n' +
@@ -164,24 +164,24 @@ angular.module('myApp.controllers', []).
           for (var q=0; q<$scope.segmentTypes.length; q++) {
             fieldCount = $scope.message.split('\n')[q].split('|').length;
             for (var m=0; m<fieldCount; m++) {
+              // declare some variables
+              segment = $scope.message.split('\n')[q].split('|')[0];
+              fieldNum = m;
+              segmentNum = q;
 
-                // declare some variables
-                segment = $scope.message.split('\n')[q].split('|')[0];
-                fieldNum = m;
-                segmentNum = q;
-
+              if (segment) {
                 if (segment === 'MSH') {
                   if (m === 0) {
                     fieldContents = '|';
                   } else {
-                     fieldContents = $scope.message.split('\n')[q].split('|')[(m)];
+                    fieldContents = $scope.message.split('\n')[q].split('|')[(m)];
                   }
                 } else {
-                  fieldContents = $scope.message.split('\n')[q].split('|')[(m+1)];
+                  fieldContents = $scope.message.split('\n')[q].split('|')[(m + 1)];
                 }
 
                 assembleFieldData(segment, fieldContents, fieldNum, segmentNum);
-
+              }
             }
           }
 
@@ -284,20 +284,7 @@ angular.module('myApp.controllers', []).
             }
           }
 
-          for (var u=0; u<$scope.components.length; u++) {
-            if ($scope.components[u].componentContents.indexOf('&') > -1) {
-              for (var x=0; x<$scope.components[u].componentContents.split('&').length; x++) {
-                $scope.subcomponents.push(
-                  {
-                    fieldNum: $scope.segmentFields[u].fieldNum,
-                    subcomponentNum: x + 1,
-                    subcomponentDescription: 'Something' + x,
-                    subcomponentContents: $scope.components[u].componentContents.split('&')[x]
-                  });
-              }
-            }
-          }
-
+          // get all repeating components for the field
           for (var v=0; v<$scope.segmentFields.length; v++) {
             if ($scope.segmentFields[v].segment === segment && $scope.segmentFields[v].fieldNum === field) {
               for (var y=0; y<$scope.segmentFields[v].fieldContents.split('~').length; y++) {
@@ -305,13 +292,29 @@ angular.module('myApp.controllers', []).
                   {
                     fieldNum: $scope.segmentFields[v].fieldNum,
                     repeatNum: y + 1,
-                    repeatDescription: 'Something' + y,
+                    repeatDescription: 'Repetition ' + y,
                     repeaterContents: $scope.segmentFields[v].fieldContents.split('~')[y]
                   });
               }
             }
           }
         };
+
+        $scope.getSubcomponentData = (fieldNum, componentNum, componentContent) => {
+          $scope.subcomponents = []
+          if (componentContent.indexOf('&') > -1) {
+            componentContent.split('&').forEach((subcomponent, x) => {
+              $scope.subcomponents.push(
+                {
+                  fieldNum: fieldNum,
+                  componentNum: componentNum,
+                  subcomponentNum: x + 1,
+                  subcomponentDescription: 'Subcomponent ' + x,
+                  subcomponentContents: subcomponent
+                });
+            })
+          }
+        }
 
         $scope.alert = '';
         $scope.showListBottomSheet = function($event) {

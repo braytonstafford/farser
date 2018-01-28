@@ -6,7 +6,6 @@
 var express = require('express'),
   routes = require('./routes'),
   api = require('./routes/api'),
-  http = require('http'),
   path = require('path');
 
 var app = module.exports = express();

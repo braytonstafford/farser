@@ -57,7 +57,7 @@ div(ng-controller='HomeController')
                 tr
                   th Field #
                   th Repetition #
-                  th Repeat Contents
+                  th Repetition Contents
               tbody
                 tr(ng-repeat='field in repeaters', ng-if='field.repeaterContents')
                   td {{ field.fieldNum }}
@@ -72,11 +72,13 @@ div(ng-controller='HomeController')
             table(md-data-table)
               thead(md-order='query.order', md-trigger='onOrderChange')
                 tr
-                  th Field Component Description
+                  th #
+                  th Component Description
                   th Component
               tbody
-                tr(ng-repeat='field in components', ng-if='field.componentContents')
-                  td {{ field.fieldNum }}-{{ field.componentNum }} {{ field.componentDescription }}
+                tr(ng-repeat='field in components', ng-if='field.componentContents', ng-click='getSubcomponentData(field.fieldNum, field.componentNum, field.componentContents)')
+                  td {{ field.fieldNum }}-{{ field.componentNum }}
+                  td {{ field.componentDescription }}
                   td {{ field.componentContents }}
       md-card
         md-card-content
@@ -86,11 +88,13 @@ div(ng-controller='HomeController')
             table(md-data-table)
               thead(md-order='query.order', md-trigger='onOrderChange')
                 tr
-                  th Field Sub-Component Description
+                  th #
+                  th Sub-Component Description
                   th Sub-Component
               tbody
                 tr(ng-repeat='field in subcomponents', ng-if='field.subcomponentContents')
-                  td {{ field.fieldNum }}.{{ field.subcomponentNum }}
+                  td {{ field.fieldNum }}-{{ field.componentNum }}.{{ field.subcomponentNum }}
+                  td {{ field.subcomponentDescription }}
                   td {{ field.subcomponentContents }}
 
   //- md-button.md-fab.md-fab-bottom-right(aria-label='Add', ng-click='showAdd($event)')

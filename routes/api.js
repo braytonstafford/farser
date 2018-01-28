@@ -68,12 +68,12 @@ exports.getFieldData = function (req, res) {
 exports.getComponentData = function (req, res) {
   var messageVersion = req.query.messageVersion;
   var dataType = req.query.dataType;
-  console.log('query: ', req.query);
+  //console.log('query: ', req.query);
 
   if (dataType !== undefined && dataType !== null && dataType !== '') {
     var componentDescription = HL7Dictionary.definitions[messageVersion].fields[dataType].desc;
     res.json(componentDescription);
   } else {
-    res.json('You got nothing');
+    res.json('You got nothing back');
   }
 };
